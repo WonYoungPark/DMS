@@ -1,4 +1,4 @@
-package com.gvalley.dms.common.account.domain;
+package com.gvalley.dms.system.account.domain;
 
 import lombok.Data;
 

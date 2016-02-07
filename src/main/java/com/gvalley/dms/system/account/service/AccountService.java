@@ -1,8 +1,8 @@
-package com.gvalley.dms.common.account.service;
+package com.gvalley.dms.system.account.service;
 
-import com.gvalley.dms.common.account.domain.Account;
-import com.gvalley.dms.common.account.repository.AccountDto;
-import com.gvalley.dms.common.account.repository.AccountRepository;
+import com.gvalley.dms.system.account.domain.Account;
+import com.gvalley.dms.system.account.repository.AccountDto;
+import com.gvalley.dms.system.account.repository.AccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

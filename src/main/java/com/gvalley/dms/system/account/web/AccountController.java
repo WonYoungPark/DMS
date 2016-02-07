@@ -1,12 +1,11 @@
-package com.gvalley.dms.common.account.web;
+package com.gvalley.dms.system.account.web;
 
-import com.gvalley.dms.common.account.domain.Account;
-import com.gvalley.dms.common.account.repository.AccountDto;
-import com.gvalley.dms.common.account.repository.AccountRepository;
-import com.gvalley.dms.common.account.service.AccountService;
+import com.gvalley.dms.system.account.domain.Account;
+import com.gvalley.dms.system.account.repository.AccountDto;
+import com.gvalley.dms.system.account.repository.AccountRepository;
+import com.gvalley.dms.system.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

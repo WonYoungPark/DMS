@@ -1,6 +1,6 @@
-package com.gvalley.dms.common.account.repository;
+package com.gvalley.dms.system.account.repository;
 
-import com.gvalley.dms.common.account.domain.Account;
+import com.gvalley.dms.system.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

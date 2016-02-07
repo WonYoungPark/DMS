@@ -1,4 +1,4 @@
-package com.gvalley.dms.common.account.repository;
+package com.gvalley.dms.system.account.repository;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;

@@ -20,7 +20,7 @@
     {name: "C#", mime: "text/x-csharp", mode: "clike", ext: ["cs"]},
     {name: "Clojure", mime: "text/x-clojure", mode: "clojure", ext: ["clj"]},
     {name: "CoffeeScript", mime: "text/x-coffeescript", mode: "coffeescript", ext: ["coffee"]},
-    {name: "Common Lisp", mime: "text/x-common-lisp", mode: "commonlisp", ext: ["cl", "lisp", "el"]},
+    {name: "Common Lisp", mime: "text/x-system-lisp", mode: "commonlisp", ext: ["cl", "lisp", "el"]},
     {name: "Cypher", mime: "application/x-cypher-query", mode: "cypher"},
     {name: "Cython", mime: "text/x-cython", mode: "python", ext: ["pyx", "pxd", "pxi"]},
     {name: "CSS", mime: "text/css", mode: "css", ext: ["css"]},
