@@ -3,6 +3,7 @@ package com.gvalley.dms.system.index.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
 
@@ -17,14 +18,14 @@ import java.util.Date;
 public class IndexController {
     // SITE http://lahuman.jabsiri.co.kr/85
 
-    @RequestMapping(value = "/index.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String getPagePath() {
         Date date = new Date();
         System.out.println("IndexController 실행 - /index : " + date.toString());
         return "gse/com/system/index";
     }
 
-    @RequestMapping(value = "/main.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/main.do")
     public String getPagePath1(Model model) {
         Date date = new Date();
         System.out.println("IndexController 실행 - /main : " + date.toString());
