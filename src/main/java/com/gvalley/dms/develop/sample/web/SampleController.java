@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SampleController {
 
-    @RequestMapping("/sample1")
+    @RequestMapping("/sample.do")
     public String getPagePath(Model model) {
         model.addAttribute("name", "박원영");
-        return "/com/develop/sample";
+        return "dms/base/sample/sample";
     }
 }
