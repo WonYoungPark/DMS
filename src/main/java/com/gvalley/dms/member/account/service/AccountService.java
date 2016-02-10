@@ -1,4 +1,4 @@
-package com.gvalley.dms.system.account.service;
+package com.gvalley.dms.member.account.service;
 
 import java.util.Date;
 
@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gvalley.dms.system.account.domain.Account;
-import com.gvalley.dms.system.account.domain.AccountDto;
-import com.gvalley.dms.system.account.domain.AccountDuplicatedException;
-import com.gvalley.dms.system.account.domain.AccountNotFoundException;
-import com.gvalley.dms.system.account.repository.AccountRepository;
+import com.gvalley.dms.member.account.domain.Account;
+import com.gvalley.dms.member.account.domain.AccountDto;
+import com.gvalley.dms.member.account.domain.AccountDuplicatedException;
+import com.gvalley.dms.member.account.domain.AccountNotFoundException;
+import com.gvalley.dms.member.account.repository.AccountRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Some descriptions here.
