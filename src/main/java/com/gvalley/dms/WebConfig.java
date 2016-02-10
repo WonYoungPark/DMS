@@ -64,4 +64,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //        registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/").setCachePeriod(31556926);
 //        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
 //    }
+
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//            registry.addInterceptor(new UserSessionInterceptor(connectionRepository));
+//    }
+//
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+//            argumentResolvers.add(new UserSessionArgumentResolver(connectionRepository));
+//    }
 }

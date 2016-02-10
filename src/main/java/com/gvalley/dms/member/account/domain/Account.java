@@ -1,4 +1,4 @@
-package com.gvalley.dms.system.account.domain;
+package com.gvalley.dms.member.account.domain;
 
 import lombok.Data;
 
@@ -33,4 +33,6 @@ public class Account {
     private Date updtDtm   ; // 수정일시
 
     private String updtUserId; // 수정사용자ID
+
+    private boolean adminYn; // 관리자여부
 }

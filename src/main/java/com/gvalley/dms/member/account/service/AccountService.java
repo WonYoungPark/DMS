@@ -1,14 +1,17 @@
 package com.gvalley.dms.system.account.service;
 
-import com.gvalley.dms.system.account.domain.Account;
-import com.gvalley.dms.system.account.repository.AccountDto;
-import com.gvalley.dms.system.account.repository.AccountRepository;
+import java.util.Date;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import com.gvalley.dms.system.account.domain.Account;
+import com.gvalley.dms.system.account.domain.AccountDto;
+import com.gvalley.dms.system.account.domain.AccountDuplicatedException;
+import com.gvalley.dms.system.account.domain.AccountNotFoundException;
+import com.gvalley.dms.system.account.repository.AccountRepository;
 
 /**
  * Some descriptions here.
@@ -20,6 +23,7 @@ import java.util.Date;
 // @Service 어노테이션을 입력하여 ComponentScan에 의해 빈으로 등록되도록 한다.
 @Service
 @Transactional
+@Slf4j
 public class AccountService {
 
     // @Autowired 어노테이션을 통해 AccountRepository를 가지고 있게끔 한다.
@@ -41,11 +45,40 @@ public class AccountService {
 //        account.setRgstUserId(dto.getUserId());
 //        account.setUpdtUserId(dto.getUserId());
 
+        String userId = dto.getUserId();
+        if (repository.findByUserId(userId) != null) {
+            log.error("user duplicated excpetion. {}", userId);
+            throw new AccountDuplicatedException(userId);
+        }
+
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
         Date date = new Date();
         account.setRgstDtm(date);
         account.setUpdtDtm(date);
 
         return repository.save(account);
+    }
+
+    public Account getAccount(String userId) {
+        Account account = repository.findOne(userId);
+
+        if (account == null) {
+            throw new AccountNotFoundException(userId);
+        }
+
+        return account;
+    }
+
+    public Account updateAccount(String userId, AccountDto.Update updateDto) {
+        Account account = getAccount(userId);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        account.setUserName(updateDto.getUserName());
+        return repository.save(account);
+    }
+
+    public void deleteAccount(String userId) {
+        repository.delete(getAccount(userId));
     }
 }
 

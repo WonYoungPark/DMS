@@ -1,9 +1,12 @@
-package com.gvalley.dms.system.account.repository;
+package com.gvalley.dms.member.account.domain;
 
-import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.Date;
 
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
 
 /**
  * Some descriptions here.
@@ -27,6 +30,20 @@ public class AccountDto {
 
         @NotBlank
         @Size(min = 5, max = 20)
+        private String password;
+    }
+
+    @Data
+    public static class Response {
+        private String userId;
+        private String userName;
+        private Date rgstDt;
+        private Date updtDt;
+    }
+
+    @Data
+    public static class Update {
+        private String userName;
         private String password;
     }
 }

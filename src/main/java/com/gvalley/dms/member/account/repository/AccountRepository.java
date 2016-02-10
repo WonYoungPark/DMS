@@ -1,6 +1,6 @@
-package com.gvalley.dms.system.account.repository;
+package com.gvalley.dms.member.account.repository;
 
-import com.gvalley.dms.system.account.domain.Account;
+import com.gvalley.dms.member.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -16,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // 2. 인터페이스 구현체의 객체를 만들어준다.
 // 3. 생성된 객체를 빈으로 등록해준다.
 public interface AccountRepository extends JpaRepository<Account, String> {
+    Account findByUserId(String userId);
 }
