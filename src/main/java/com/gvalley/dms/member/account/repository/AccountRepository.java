@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // 1. 특정 인터페이스 타입에 따라 클래스를 찾는다.
 // 2. 인터페이스 구현체의 객체를 만들어준다.
 // 3. 생성된 객체를 빈으로 등록해준다.
-public interface AccountRepository extends JpaRepository<Account, String> {
-    Account findByUserId(String userId);
+public interface AccountRepository extends JpaRepository<Account, Long> {
+    Account findByUsername(String username);
 }

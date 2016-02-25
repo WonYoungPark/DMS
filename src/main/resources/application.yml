@@ -1,0 +1,117 @@
+## default 실행 프로파일
+spring.profiles.active: development
+
+## 공통설정
+spring:
+  application.name: DMS
+  jpa:
+    database: H2
+    show-sql: true
+  mvc:
+    data-format: yyyy-MM-dd
+  http:
+    encoding.charset: UTF-8
+    encoding.enabled: true
+    encoding.force: true
+  jackson:
+    data-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html;charset=UTF-8
+    cache: false
+endpoints:
+  enabled: flase
+  shutdown.enabled: true
+
+---
+## 개발
+spring:
+  profiles: development
+  datasource:
+    initialize: false
+    sql-script-encoding: UTF-8
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/.-
+    username: sa
+    password:
+flyway:
+  enabled: false
+server:
+  port: ${port:9000}
+  #context-path: /context
+logging:
+  level:
+    org.thymeleaf: DEBUG
+    org.springframeword.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate: INFO
+endpoints:
+  enabled: false
+  shutdown.enabled: true
+
+---
+## 테스트
+spring:
+  profiles: test
+  datasource:
+    initialize: false
+    sql-script-encoding: UTF-8
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/.-
+    username: sa
+    password:
+flyway:
+  enabled: false
+server:
+  port: 0
+  #context-path: /context
+logging:
+  level:
+    org.thymeleaf: DEBUG
+    org.springframeword.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate: INFO
+endpoints:
+  enabled: false
+
+---
+## 배포
+spring:
+  profiles: production
+  datasource:
+    initialize: false
+    sql-script-encoding: UTF-8
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/.-
+    username: sa
+    password:
+  thymeleaf:
+    cache: true
+server:
+  port: ${port:9000}
+  #context-path: /context
+flyway:
+  enabled: true
+  check-location: ture # 마이그레이션 스크립트 파일이 존재하는지 여부를 확인
+  locations: classpath:db/migration # 마이그레이션 스크립트 위치
+  baseline-version: LATEST # 마이그레이션을 시작할 번호
+  sql-migration-prefix: V
+  sql-migration-suffix: .sql
+  url: # Flyway 소유의 데이터소스를 생성하려고 하는 경우 사용
+  user: sa # Flyway 소유의 데이터소스를 생성하려고 하는 경우 사용
+  password: # Flyway 소유의 데이터소스를 생성하려고 하는 경우 사용
+
+  #context-path: /context
+logging:
+  file: 파일경로 지정
+  level:
+    org.thymeleaf: INFO
+    org.springframeword.web: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate: INFO
+endpoints:
+  enabled: false

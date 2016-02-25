@@ -4,16 +4,14 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.gvalley.dms.member.account.domain.Account;
 import com.gvalley.dms.member.account.domain.AccountDto;
@@ -21,7 +19,12 @@ import com.gvalley.dms.member.account.domain.AccountDuplicatedException;
 import com.gvalley.dms.member.account.domain.AccountNotFoundException;
 import com.gvalley.dms.member.account.repository.AccountRepository;
 import com.gvalley.dms.member.account.service.AccountService;
-import com.gvalley.dms.common.error.domain.ErrorResponse;
+import com.gvalley.dms.common.error.ErrorResponse;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * Some descriptions here.
@@ -31,6 +34,7 @@ import com.gvalley.dms.common.error.domain.ErrorResponse;
  * @since 0.1
  */
 @RestController
+//@RequestMapping("/api")
 public class AccountController {
 
     @Autowired
@@ -42,7 +46,7 @@ public class AccountController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/account")
+    @RequestMapping(value = "/account", method = POST)
     public String getPagePath(Model model) {
         model.addAttribute("name", "박원영");
         return "/com/gvalley.dms.develop/account";
@@ -52,9 +56,9 @@ public class AccountController {
     // 최근 ServerSide 개발시 Rest API 개발로 인하 ㄴRequest 본문으로 들어오는걸 파싱하는방법을 사용
     // RequestBody를 사용할시 MessageConverter(jSon2 Converter)가 동작함.
     // Request 본문에 들어있는 jSon 데이터를 객체로 바인딩 해준다.
-    @RequestMapping(method = RequestMethod.POST, value = "/account/create")
+    @RequestMapping(value = "/accounts", method = POST)
     public ResponseEntity createAccount(@RequestBody @Valid AccountDto.Create create,
-                                       BindingResult result // Validation 이전에 바인딩 결과를 확인할수 있다.
+                                        BindingResult result // Validation 이전에 바인딩 결과를 확인할수 있다.
     ) {
         if ( result.hasErrors()) {
             // TODO 에러 응답 본문 추가하기
@@ -68,19 +72,59 @@ public class AccountController {
         Account newAccount = service.createAccount(create);
 
         return new ResponseEntity<>(modelMapper.map(newAccount, AccountDto.Response.class),
-                                    HttpStatus.CREATED);
+                HttpStatus.CREATED);
     }
 
-    // 에러처리
+    @RequestMapping(value = "/accounts", method = GET)
+    @ResponseStatus(HttpStatus.OK)
+    public PageImpl<AccountDto.Response> getAccounts(Pageable pageable) {
+        Page<Account> page = repository.findAll(pageable);
+        List<AccountDto.Response> content = page.getContent().parallelStream()
+                .map(account -> modelMapper.map(account, AccountDto.Response.class))
+                .collect(Collectors.toList());
+        return new PageImpl<>(content, pageable, page.getTotalElements());
+    }
+
+    @RequestMapping(value = "/accounts/{userId}", method = GET)
+    @ResponseStatus(HttpStatus.OK)
+    public AccountDto.Response getAccount(@PathVariable Long userId) {
+        Account account = service.getAccount(userId);
+
+        return modelMapper.map(account, AccountDto.Response.class);
+    }
+
+    @RequestMapping(value = "/accounts/{userId}", method = PUT)
+    public ResponseEntity updateAccount(@PathVariable Long userId,
+                                        @RequestBody @Valid AccountDto.Update updateDto,
+                                        BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Account updateAccount = service.updateAccount(userId, updateDto);
+
+        return new ResponseEntity<>(modelMapper.map(updateAccount, AccountDto.Response.class), HttpStatus.OK);
+
+        //TODO update
+    }
+
+    @RequestMapping(value = "accounts/{userId}", method = DELETE)
+    public ResponseEntity deleteAccount(@PathVariable Long userId) {
+        service.deleteAccount(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 예외처리
     @ExceptionHandler(AccountDuplicatedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleAccountDuplicatedException(AccountDuplicatedException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMessage("[" + e.getUserId() + "] 중복된 userId 입니다.");
+        errorResponse.setMessage("[" + e.getUsername() + "] 중복된 username 입니다.");
         errorResponse.setCode("duplicated.userId.exception");
         return errorResponse;
     }
 
+    // 예외처리
     @ExceptionHandler(AccountNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleAccountNotFoundException(AccountNotFoundException e) {

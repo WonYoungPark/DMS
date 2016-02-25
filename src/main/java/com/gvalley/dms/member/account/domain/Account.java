@@ -18,19 +18,24 @@ import java.util.Date;
 public class Account {
 
     @Id @GeneratedValue
-    private String userId  ; // 사용자ID
+    private Long userId; // 사용자ID
 
-    private String userName; // 사용자명
+    @Column(unique = true)
+    private String username;
 
-    private String password; // 패스워드
+    private String password;
+
+    private String email;
+
+    private String fullName;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date rgstDtm   ; // 등록일시
+    private Date rgstDt; // 등록일시
 
     private String rgstUserId; // 등록사용자ID
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updtDtm   ; // 수정일시
+    private Date updtDt; // 수정일시
 
     private String updtUserId; // 수정사용자ID
 

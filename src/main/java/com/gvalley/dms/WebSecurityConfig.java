@@ -1,22 +1,60 @@
-//package com.gvalley.dms;
-//
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
-//
-///**
-// * Some descriptions here.
-// *
-// * @aothor WonYoungPark / wyparks2@gmail.com
-// * @Date 2016-02-04
-// * @since 0.1
-// */
-//@Configuration
-//@EnableWebMvcSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-//public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+package com.gvalley.dms;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * Some descriptions here.
+ *
+ * @aothor WonYoungPark / wyparks2@gmail.com
+ * @Date 2016-02-04
+ * @since 0.1
+ */
+@Configuration
+@EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    // 설명 : userDetailsService와 passwordEncoder를 AuthenticationManagerBuilder에 세팅해 준다.(사용자의 userName과 password가 맞는지 확인한다.)
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable(); // csrf는 기본으로 켜져있음. GET 이외의 요청이 들어오면 spring security가 csrf토큰값을 검증한다.
+
+        http.httpBasic(); // 인증방식
+
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+                .antMatchers(HttpMethod.PUT, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+                .antMatchers(HttpMethod.DELETE, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+                .anyRequest().permitAll(); // 나머지는 허용
+
+    }
+
+    // ROLE Hieracry
+
+
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
@@ -38,4 +76,4 @@
 //        http.csrf().disable(); // CSRF 보호설정 비활성
 //        http.headers().frameOptions().disable(); // 스프링 시큘티의 X-Frame-Option 비활성
 //    }
-//}
+}

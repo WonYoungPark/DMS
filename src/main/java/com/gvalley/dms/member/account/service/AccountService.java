@@ -3,7 +3,10 @@ package com.gvalley.dms.member.account.service;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccountService {
 
+    // Lombok에서 Slf4j 어노테이션을 사용하면 아래 코드가 자동생성된다.
+    //private Logger log = LoggerFactory.getLogger(this.getClass());
+
     // @Autowired 어노테이션을 통해 AccountRepository를 가지고 있게끔 한다.
     @Autowired
     private AccountRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -47,22 +56,22 @@ public class AccountService {
 //        account.setRgstUserId(dto.getUserId());
 //        account.setUpdtUserId(dto.getUserId());
 
-        String userId = dto.getUserId();
-        if (repository.findByUserId(userId) != null) {
-            log.error("user duplicated excpetion. {}", userId);
-            throw new AccountDuplicatedException(userId);
+        String username = dto.getUsername();
+        if (repository.findByUsername(username) != null) {
+            log.error("user duplicated excpetion. {}", username);
+            throw new AccountDuplicatedException(username);
         }
 
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         Date date = new Date();
-        account.setRgstDtm(date);
-        account.setUpdtDtm(date);
+        account.setRgstDt(date);
+        account.setUpdtDt(date);
 
         return repository.save(account);
     }
 
-    public Account getAccount(String userId) {
+    public Account getAccount(Long userId) {
         Account account = repository.findOne(userId);
 
         if (account == null) {
@@ -72,14 +81,14 @@ public class AccountService {
         return account;
     }
 
-    public Account updateAccount(String userId, AccountDto.Update updateDto) {
+    public Account updateAccount(Long userId, AccountDto.Update updateDto) {
         Account account = getAccount(userId);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        account.setUserName(updateDto.getUserName());
+        account.setFullName(updateDto.getFullName());
         return repository.save(account);
     }
 
-    public void deleteAccount(String userId) {
+    public void deleteAccount(Long userId) {
         repository.delete(getAccount(userId));
     }
 }
