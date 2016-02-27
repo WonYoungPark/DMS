@@ -8,13 +8,13 @@ package com.gvalley.dms.member.account.domain;
  */
 public class AccountNotFoundException extends RuntimeException {
 
-    Long userId;
+    Long id;
 
-    public AccountNotFoundException(Long userId) {
-        this.userId = userId;
+    public AccountNotFoundException(Long id) {
+        this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 }

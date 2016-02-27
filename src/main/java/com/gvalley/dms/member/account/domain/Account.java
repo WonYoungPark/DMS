@@ -18,26 +18,24 @@ import java.util.Date;
 public class Account {
 
     @Id @GeneratedValue
-    private Long userId; // 사용자ID
+    private Long id;
 
     @Column(unique = true)
     private String username;
 
     private String password;
 
-    private String email;
-
-    private String fullName;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date rgstDt; // 등록일시
 
-    private String rgstUserId; // 등록사용자ID
+    private String rgstId; // 등록ID
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updtDt; // 수정일시
 
-    private String updtUserId; // 수정사용자ID
+    private String updtId; // 수정ID
+
+    private Long companyId; // 기업ID
 
     private boolean adminYn; // 관리자여부
 }

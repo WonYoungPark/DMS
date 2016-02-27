@@ -31,9 +31,8 @@ public class AccountDto {
 
     @Data
     public static class Response {
-        private Long userId;
+        private Long id;
         private String username;
-        private String fullName;
         private Date rgstDt;
         private Date updtDt;
     }
@@ -41,6 +40,9 @@ public class AccountDto {
     @Data
     public static class Update {
         private String password;
-        private String fullName;
+        private Date rgstDt;
+        private Long rgstId;
+        private Date updtDt;
+        private Long updtId;
     }
 }

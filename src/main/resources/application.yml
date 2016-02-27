@@ -35,11 +35,13 @@ spring:
     initialize: false
     sql-script-encoding: UTF-8
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:~/.-
+    url: jdbc:h2:file:/tmp/account
     username: sa
     password:
 flyway:
-  enabled: false
+  enabled: true
+jap:
+  hibernatte.ddl-auro: validate
 server:
   port: ${port:9000}
   #context-path: /context

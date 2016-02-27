@@ -85,32 +85,30 @@ public class AccountController {
         return new PageImpl<>(content, pageable, page.getTotalElements());
     }
 
-    @RequestMapping(value = "/accounts/{userId}", method = GET)
+    @RequestMapping(value = "/accounts/{id}", method = GET)
     @ResponseStatus(HttpStatus.OK)
-    public AccountDto.Response getAccount(@PathVariable Long userId) {
-        Account account = service.getAccount(userId);
+    public AccountDto.Response getAccount(@PathVariable Long id) {
+        Account account = service.getAccount(id);
 
         return modelMapper.map(account, AccountDto.Response.class);
     }
 
-    @RequestMapping(value = "/accounts/{userId}", method = PUT)
-    public ResponseEntity updateAccount(@PathVariable Long userId,
+    @RequestMapping(value = "/accounts/{id}", method = PUT)
+    public ResponseEntity updateAccount(@PathVariable Long id,
                                         @RequestBody @Valid AccountDto.Update updateDto,
                                         BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Account updateAccount = service.updateAccount(userId, updateDto);
+        Account updateAccount = service.updateAccount(id, updateDto);
 
         return new ResponseEntity<>(modelMapper.map(updateAccount, AccountDto.Response.class), HttpStatus.OK);
-
-        //TODO update
     }
 
-    @RequestMapping(value = "accounts/{userId}", method = DELETE)
-    public ResponseEntity deleteAccount(@PathVariable Long userId) {
-        service.deleteAccount(userId);
+    @RequestMapping(value = "accounts/{id}", method = DELETE)
+    public ResponseEntity deleteAccount(@PathVariable Long id) {
+        service.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -129,7 +127,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleAccountNotFoundException(AccountNotFoundException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMessage("[" + e.getUserId() + "]에 해당하는 계정이 없습니다.");
+        errorResponse.setMessage("[" + e.getId() + "]에 해당하는 계정이 없습니다.");
         errorResponse.setCode("account.not.found.exception");
         return errorResponse;
     }

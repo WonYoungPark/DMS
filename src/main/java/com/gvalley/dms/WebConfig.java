@@ -34,21 +34,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return registration;
     }
 
-    // <mvc:default-servlet-handler>와 동일한 기능
-    // WebMvcConfigurerAdapter class 를 오버라이딩해서 정적자원처리가 디폴트 서블릿으로 위임되게 한다.
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
+//    // <mvc:default-servlet-handler>와 동일한 기능
+//    // WebMvcConfigurerAdapter class 를 오버라이딩해서 정적자원처리가 디폴트 서블릿으로 위임되게 한다.
+//    @Override
+//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//        configurer.enable();
+//    }
 
-    // ViewResolver 설정
-    @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
+//    // ViewResolver 설정
+//    @Bean
+//    public InternalResourceViewResolver viewResolver() {
+//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setPrefix("WEB-INF/views/");
+//        resolver.setSuffix(".jsp");
+//        return resolver;
+//    }
 
     // UTF-8 Filter 설정
     @Order(Ordered.HIGHEST_PRECEDENCE) // Bean정의 우선순위를 지정함. (=가장 먼저 적용되게 함)

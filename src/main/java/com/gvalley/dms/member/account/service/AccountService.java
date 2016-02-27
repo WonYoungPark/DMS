@@ -71,25 +71,24 @@ public class AccountService {
         return repository.save(account);
     }
 
-    public Account getAccount(Long userId) {
-        Account account = repository.findOne(userId);
+    public Account getAccount(Long id) {
+        Account account = repository.findOne(id);
 
         if (account == null) {
-            throw new AccountNotFoundException(userId);
+            throw new AccountNotFoundException(id);
         }
 
         return account;
     }
 
-    public Account updateAccount(Long userId, AccountDto.Update updateDto) {
-        Account account = getAccount(userId);
+    public Account updateAccount(Long id, AccountDto.Update updateDto) {
+        Account account = getAccount(id);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        account.setFullName(updateDto.getFullName());
         return repository.save(account);
     }
 
-    public void deleteAccount(Long userId) {
-        repository.delete(getAccount(userId));
+    public void deleteAccount(Long id) {
+        repository.delete(getAccount(id));
     }
 }
 
