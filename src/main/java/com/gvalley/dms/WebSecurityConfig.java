@@ -54,28 +54,37 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         // 인가 관련 설정
         http
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
-//                .antMatchers(HttpMethod.PUT, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
-//                .antMatchers(HttpMethod.DELETE, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
-//                .anyRequest().permitAll(); // 나머지는 허용
-                .antMatchers("login").permitAll()
-                .anyRequest().authenticated();
+//                    .antMatchers(HttpMethod.GET, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+//                    .antMatchers(HttpMethod.PUT, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+//                    .antMatchers(HttpMethod.DELETE, "/account/**").hasRole("USER") // USER를 가지고 있는 사람에게만 허용함.
+//                    .anyRequest().permitAll(); // 나머지는 허용
+                    .antMatchers("login").permitAll()
+                    .anyRequest().authenticated()
+        ;
 
         // 로그인 관련 설정
+//        http
+//                .formLogin() // 인증 처리 경로
+//                    .loginProcessingUrl("/login") // 로그인 처리 경로
+//                    .loginPage("/login") // 로그인 폼 표시 경로
+//                    .failureUrl("/login?error") // 인증 실패시 이동 경로
+//                    .defaultSuccessUrl("/index", true) // 인증 성공시 이동 경로
+//                    .usernameParameter("username").passwordParameter("password") // 사용자 이름과 암호 관련 파라미터 이름 설정
+//                .and()
+//                .rememberMe()
+//                    .tokenValiditySeconds(2419200) // 4주 ( 기본값 2주 )
+//                    .key("SpringSecured") // 개인키
+//        ;
         http
-                .formLogin() // 인증 처리 경로
-                .loginProcessingUrl("") // 로그인 처리 경로
-                .loginPage("/login") // 로그인 폼 표시 경로
-                .failureUrl("login?error") // 인증 실패시 이동 경로
-                .defaultSuccessUrl("/") // 인증 성공시 이동 경로
-                .usernameParameter("/username").passwordParameter("password") // 사용자 이름과 암호 관련 파라미터 이름 설정
-                .and();
+                .formLogin()
+                    .loginPage("/login");
 
         // 로그아웃 관련 설정
         http
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // 로그아웃 처리 경로
-                .logoutSuccessUrl("login"); // 로그아웃 성공시 이동 경로
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // 로그아웃 처리 경로
+                    .logoutSuccessUrl("/login") // 로그아웃 성공시 이동 경로
+        ;
 
     }
     // ROLE Hieracry

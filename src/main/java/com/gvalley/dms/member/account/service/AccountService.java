@@ -64,9 +64,9 @@ public class AccountService {
 
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
-        Date date = new Date();
-        account.setRgstDt(date);
-        account.setUpdtDt(date);
+        Date now = new Date();
+        account.setRgstDt(now);
+        account.setUpdtDt(now);
 
         return repository.save(account);
     }

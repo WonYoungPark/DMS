@@ -27,6 +27,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = POST)
     public String getPagePath() {
-        return "/login";
+        //return "/login";
+        return "/gse/com/system/login";
     }
 }

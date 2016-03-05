@@ -31,17 +31,17 @@ endpoints:
 ## 개발
 spring:
   profiles: development
-  datasource:
-    initialize: false
-    sql-script-encoding: UTF-8
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:/tmp/account
-    username: sa
-    password:
+#  datasource:
+#    initialize: false
+#    sql-script-encoding: UTF-8
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:file:/tmp/account
+#    username: sa
+#    password:
 flyway:
-  enabled: true
-jap:
-  hibernatte.ddl-auro: validate
+  enabled: false #true
+#jpa:
+#  hibernatte.ddl-auro: validate
 server:
   port: ${port:9000}
   #context-path: /context

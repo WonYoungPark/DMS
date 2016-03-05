@@ -2,6 +2,7 @@ package com.gvalley.dms.member.account.repository;
 
 import com.gvalley.dms.member.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Some descriptions here.
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // 1. 특정 인터페이스 타입에 따라 클래스를 찾는다.
 // 2. 인터페이스 구현체의 객체를 만들어준다.
 // 3. 생성된 객체를 빈으로 등록해준다.
+@Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByUsername(String username);
 }
