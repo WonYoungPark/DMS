@@ -16,18 +16,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class LoginController {
-    @Autowired
-    private AccountService service;
-
-    @Autowired
-    private AccountRepository repository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @RequestMapping(value = "/login", method = POST)
-    public String getPagePath() {
-        //return "/login";
-        return "/gse/com/system/login";
-    }
+//    @Autowired
+//    private AccountService service;
+//
+//    @Autowired
+//    private AccountRepository repository;
+//
+//    @Autowired
+//    private ModelMapper modelMapper;
+//
+//    @RequestMapping(value = "/login", method = POST)
+//    public String getPagePath() {
+//        //return "/login";
+//        return "/gse/com/system/login";
+//    }
 }

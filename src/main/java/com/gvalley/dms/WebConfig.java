@@ -7,10 +7,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 /**
  * Some descriptions here.
@@ -26,6 +31,14 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration //태그는 현재의 클래스가 Spring의 설정파일임을 어플리케이션 컨텍스트에게 알려주는 역할을 합니다.
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    // <mvc:default-servlet-handler>와 동일한 기능
+    // WebMvcConfigurerAdapter class 를 오버라이딩해서 정적자원처리가 디폴트 서블릿으로 위임되게 한다.
+    // TODO http://bestheroz.blog.me/220299004488 사이트를 통해 <mvc:default-servlet-handler> 학습하기.
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
     // H2 Database 콘솔 접근 URL 설정
     @Bean
     public ServletRegistrationBean h2servletRegistration() {
@@ -33,22 +46,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registration.addUrlMappings("/h2console/*");
         return registration;
     }
-
-//    // <mvc:default-servlet-handler>와 동일한 기능
-//    // WebMvcConfigurerAdapter class 를 오버라이딩해서 정적자원처리가 디폴트 서블릿으로 위임되게 한다.
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
-
-//    // ViewResolver 설정
-//    @Bean
-//    public InternalResourceViewResolver viewResolver() {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setPrefix("WEB-INF/views/");
-//        resolver.setSuffix(".jsp");
-//        return resolver;
-//    }
 
     // UTF-8 Filter 설정
     @Order(Ordered.HIGHEST_PRECEDENCE) // Bean정의 우선순위를 지정함. (=가장 먼저 적용되게 함)
@@ -66,6 +63,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/").setCachePeriod(31556926);
 //        registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/").setCachePeriod(31556926);
 //        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
+//    }
+
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/signin").setViewName("signin");
+//        registry.addViewController("/error/404.html").setViewName("404");
+//        registry.addViewController("/error/505.html").setViewName("505");
 //    }
 
 //    @Override

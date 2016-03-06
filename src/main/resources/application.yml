@@ -16,13 +16,14 @@ spring:
   jackson:
     data-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
-    check-template-location: true
-    prefix: classpath:/templates/
-    suffix: .html
-    mode: HTML5
-    encoding: UTF-8
-    content-type: text/html;charset=UTF-8
-    cache: false
+#    check-template-location: true
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML5
+#    encoding: UTF-8
+#    content-type: text/html;charset=UTF-8
+#    cache: false
+    check-template-location: false
 endpoints:
   enabled: flase
   shutdown.enabled: true
@@ -41,7 +42,7 @@ spring:
 flyway:
   enabled: false #true
 #jpa:
-#  hibernatte.ddl-auro: validate
+#  hibernatte.ddl-auto: validate
 server:
   port: ${port:9000}
   #context-path: /context
