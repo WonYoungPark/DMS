@@ -2,6 +2,7 @@ package com.gvalley.dms.member.account.web;
 
 import javax.validation.Valid;
 
+import com.gvalley.dms.common.security.UserDetailsImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +60,8 @@ public class AccountController {
     // Request 본문에 들어있는 jSon 데이터를 객체로 바인딩 해준다.
     @RequestMapping(value = "/accounts", method = POST)
     public ResponseEntity createAccount(@RequestBody @Valid AccountDto.Create create,
-                                        BindingResult result // Validation 이전에 바인딩 결과를 확인할수 있다.
+                                        BindingResult result//, // Validation 이전에 바인딩 결과를 확인할수 있다.
+                                        //@AuthenticationPrincipal UserDetailsImpl userDetailsImpl // 로그인 상태에 있는 UserDetailsImpl 객체를 가져올수 있다.
     ) {
         if ( result.hasErrors()) {
             // TODO 에러 응답 본문 추가하기
@@ -70,6 +73,7 @@ public class AccountController {
         }
 
         Account newAccount = service.createAccount(create);
+        //Account newAccount = service.createAccount(create, userDetailsImpl.getUsername); // 계정 추가를 할시 로그인 상태 계정명을 입력할때
 
         return new ResponseEntity<>(modelMapper.map(newAccount, AccountDto.Response.class),
                 HttpStatus.CREATED);

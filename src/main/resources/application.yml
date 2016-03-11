@@ -9,24 +9,24 @@ spring:
     show-sql: true
   mvc:
     data-format: yyyy-MM-dd
-  http:
-    encoding.charset: UTF-8
-    encoding.enabled: true
-    encoding.force: true
+#  http:
+#    encoding.charset: UTF-8
+#    encoding.enabled: true
+#    encoding.force: true
   jackson:
     data-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
-#    check-template-location: true
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    mode: HTML5
-#    encoding: UTF-8
-#    content-type: text/html;charset=UTF-8
-#    cache: false
-    check-template-location: false
-endpoints:
-  enabled: flase
-  shutdown.enabled: true
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+#    check-template-location: false
+#endpoints:
+#  enabled: flase
+#  shutdown.enabled: true
 
 ---
 ## 개발
@@ -36,13 +36,13 @@ spring:
 #    initialize: false
 #    sql-script-encoding: UTF-8
 #    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:file:/tmp/account
+#    url: jdbc:h2:file:/tmp/account # H2 데이터베이스 기능 중 파일 데이터베이스를 사용하여 데이터가 지워지지 않고 지속되도록 설정함
 #    username: sa
 #    password:
 flyway:
   enabled: false #true
 #jpa:
-#  hibernatte.ddl-auto: validate
+#  hibernatte.ddl-auto: validate # JPA로 DDL을 실행하는것이 아닌 Flyway로 실행하므로, JPA가 스키마 검사만 하도록 설정
 server:
   port: ${port:9000}
   #context-path: /context
@@ -52,9 +52,9 @@ logging:
     org.springframeword.web: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate: INFO
-endpoints:
-  enabled: false
-  shutdown.enabled: true
+#endpoints:
+#  enabled: false
+#  shutdown.enabled: true
 
 ---
 ## 테스트

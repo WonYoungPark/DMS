@@ -31,5 +31,11 @@ public class IndexController {
         System.out.println("IndexController 실행 - /main : " + date.toString());
         return "main";
     }
+
+    @RequestMapping(value = "/")
+    public String index() {
+        return "index";
+    }
+
 }
 

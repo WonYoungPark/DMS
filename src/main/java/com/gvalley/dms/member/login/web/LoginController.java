@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -16,18 +18,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 public class LoginController {
-//    @Autowired
-//    private AccountService service;
-//
-//    @Autowired
-//    private AccountRepository repository;
-//
-//    @Autowired
-//    private ModelMapper modelMapper;
-//
-//    @RequestMapping(value = "/login", method = POST)
-//    public String getPagePath() {
-//        //return "/login";
-//        return "/gse/com/system/login";
-//    }
+    @Autowired
+    private AccountService service;
+
+    @Autowired
+    private AccountRepository repository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @RequestMapping(value = "/login")
+    public ModelAndView getPagePath(ModelAndView modelAndView) {
+        modelAndView.setViewName("gse/com/system/login");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/test")
+    public String test() {
+        return "gse/com/system/test";
+    }
 }
